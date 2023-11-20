@@ -8,6 +8,10 @@
     /* background-color: red; */
 }
 
+.videoCardImage:hover{
+    cursor: pointer;
+}
+
 .videoCardImage{
     display: flex;
     justify-content: center;
