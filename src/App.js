@@ -1,25 +1,94 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header';
+import HomePage from './components/HomePage';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  Link
+} from "react-router-dom";
+import Highlights from './components/Highlights';
+import WatchScreen from './components/WatchScreen';
+import { useSelector } from 'react-redux';
+
+
+const RenderLayout = ({children}) => {
+  return(
+    <div className='homePage'>
+      <Header />
+      {children}
+    </div>
+  )
+  
+
+}
+
 
 function App() {
+  const selector = useSelector((state) => state.watchScreenState)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+
+        <Routes>
+          
+          <Route 
+            exact path='/' 
+            element={
+              <RenderLayout>
+                <HomePage />
+              </RenderLayout>
+            } 
+          />
+
+          <Route 
+            exact path='/highlights' 
+            element={
+              <RenderLayout>
+                <Highlights />
+              </RenderLayout>
+            } 
+          />
+
+          <Route
+            exact path='/watch'
+            element={
+              <RenderLayout>
+                <WatchScreen />
+              </RenderLayout>
+            }
+
+          />
+
+
+          <Route 
+            path="*" 
+            element={ 
+              <Navigate to="/" /> 
+            } 
+          />
+
+        </Routes>
+    
+    </Router>
+
+  )
+
+
+
+      
+      
+      {/* {header} */}
+      {/* {sidebar} */}
+      {/* {Recvids} */}
 }
 
 export default App;
+
+// element={
+//   <div className='homePage'>
+//     <Header />
+//     <HomePage />
+//   </div>
+
+// }

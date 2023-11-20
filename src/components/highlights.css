@@ -1,0 +1,17 @@
+.highlightsPageContainer{
+    position: relative;
+    min-height: 100vh;
+    background-color: #282c34;
+    padding-top: 130px;
+    display: flex;
+    flex-direction: column;
+}
+
+.highlightVids{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
