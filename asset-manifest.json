@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/football-app/static/css/main.401ffb07.css",
+    "main.css": "/football-app/static/css/main.d82569a1.css",
     "main.js": "/football-app/static/js/main.0edd6f9a.js",
     "static/media/homepageVid.mp4": "/football-app/static/media/homepageVid.a3b4aa0ecab25118652f.mp4",
     "static/media/logo.png": "/football-app/static/media/logo.0e69d2265e5f9ae6f5b5.png",
     "index.html": "/football-app/index.html",
-    "main.401ffb07.css.map": "/football-app/static/css/main.401ffb07.css.map",
+    "main.d82569a1.css.map": "/football-app/static/css/main.d82569a1.css.map",
     "main.0edd6f9a.js.map": "/football-app/static/js/main.0edd6f9a.js.map"
   },
   "entrypoints": [
-    "static/css/main.401ffb07.css",
+    "static/css/main.d82569a1.css",
     "static/js/main.0edd6f9a.js"
   ]
 }
