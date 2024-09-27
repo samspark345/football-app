@@ -13,7 +13,7 @@
 
 # Role Responsibilities
 - Developers:
-- Product Owner:
+- Product Owner: Define the vision for the feature, help create and groom backlog, influence software architecture discussions, work with developers and scrum master to ensure the product meets specifications.
 - Scrum Master
 
 # Systems Used:
