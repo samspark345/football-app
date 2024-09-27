@@ -17,6 +17,7 @@
 - Develop web functionalities such as API integrations, database management, and user interface design.
 - Write clean, maintainable code and perform code reviews to uphold coding standards.
 - Debug and troubleshoot issues that arise in the application and optimize performance.
+- Work alongside scrum master to ensure proper task management and prioritization. 
 - Work closely with the product owner to clarify requirements and deliver features aligned with the product vision.
 ### 2.  Product Owner:
 - Defines the vision and strategy for the project feature
@@ -27,11 +28,12 @@
 - Facilitates and organizes scrum meetings such as sprint planning, regular stand-ups, sprint reviews, and retrospectives.
 - Removes impediments and ensures the team follows agile practices.
 - Acts as a bridge between the development team and the product owner, ensuring smooth communication.
+- Work alongside Product Owner to define/manage product backlog.
 
 # Systems Used:
-- JIRA:
-- GitHub & Git:
-- Discord
+- JIRA: Issue Tracking and Documentation
+- GitHub & Git: Version Control and Documentation
+- Discord: Communication channel between group members
 
 Link to website:
 https://samspark345.github.io/football-app/
