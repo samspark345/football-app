@@ -12,9 +12,21 @@
 
 
 # Role Responsibilities
-- Developers:
-- Product Owner: Define the vision for the feature, help create and groom backlog, influence software architecture discussions, work with developers and scrum master to ensure the product meets specifications.
-- Scrum Master
+### 1. Developers:
+- Collaboratively design, develop, and implement project feature (both frontend and backend).
+- Develop web functionalities such as API integrations, database management, and user interface design.
+- Write clean, maintainable code and perform code reviews to uphold coding standards.
+- Debug and troubleshoot issues that arise in the application and optimize performance.
+- Work closely with the product owner to clarify requirements and deliver features aligned with the product vision.
+### 2.  Product Owner:
+- Defines the vision and strategy for the project feature
+- Gathers requirements and prioritizes features, will also influence software architecture discussions.
+- Manages the product backlog (including grooming) and ensures it aligns with business goals.
+- Provides clarity and guidance to the development team + scrum master product features, and approves the copleted work to ensure it meets the exepctations and requirements.
+### 3. Scrum Master:
+- Facilitates and organizes scrum meetings such as sprint planning, regular stand-ups, sprint reviews, and retrospectives.
+- Removes impediments and ensures the team follows agile practices.
+- Acts as a bridge between the development team and the product owner, ensuring smooth communication.
 
 # Systems Used:
 - JIRA:
