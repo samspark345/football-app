@@ -23,7 +23,7 @@
 - Defines the vision and strategy for the project feature
 - Gathers requirements and prioritizes features, will also influence software architecture discussions.
 - Manages the product backlog (including grooming) and ensures it aligns with business goals.
-- Provides clarity and guidance to the development team + scrum master product features, and approves the copleted work to ensure it meets the exepctations and requirements.
+- Provides clarity and guidance to the development team + scrum master product features, and approves the completed work to ensure it meets the expectations and requirements.
 ### 3. Scrum Master:
 - Facilitates and organizes scrum meetings such as sprint planning, regular stand-ups, sprint reviews, and retrospectives.
 - Removes impediments and ensures the team follows agile practices.
