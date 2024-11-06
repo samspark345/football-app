@@ -35,6 +35,128 @@ class ApiService {
       console.error(error);
     }
   }
+
+  async retrieveAllCountries() {
+    const options = {
+      method: 'GET',
+      url: api_url + '/countries',
+      headers: {
+        'x-rapidapi-key': API_KEY,
+        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async retrieveAllLeagues() {
+    const options = {
+      method: 'GET',
+      url: api_url + '/leagues',
+      headers: {
+        'x-rapidapi-key': API_KEY,
+        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async retrieveAllSeasons() {
+    const options = {
+      method: 'GET',
+      url: api_url + '/seasons',
+      headers: {
+        'x-rapidapi-key': API_KEY,
+        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+  async retrieveTeamInfo(country) {
+    const options = {
+      method: 'GET',
+      url: api_url + '/teams',
+      params: {
+        id: team_id
+      },
+      headers: {
+        'x-rapidapi-key': API_KEY,
+        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async retrieveLeaguesByTeamId(team_id) {
+    const options = {
+      method: 'GET',
+      url: api_url + '/leagues',
+      params: {
+        team: team_id,
+      },
+      headers: {
+        'x-rapidapi-key': API_KEY,
+        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async retrieveTeamStatsByLeague(league_id, team_id, season) {
+    const options = {
+      method: 'GET',
+      url: api_url + '/teams/statistics',
+      params: {
+        league: league_id,
+        season: season,
+        team: team_id
+      },
+      headers: {
+        'x-rapidapi-key': API_KEY,
+        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   checkForError(response) {
 
     if (!response.ok) {
