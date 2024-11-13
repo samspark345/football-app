@@ -1,0 +1,9 @@
+.user_login_options:hover{
+    cursor:pointer;
+}
+
+.user_login_options_div{
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+}
