@@ -1,86 +1,91 @@
-import './App.css';
-import Header from './components/Header';
-import HomePage from './components/HomePage';
+import { useSelector } from "react-redux";
 import {
+  Link,
+  Navigate,
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate,
-  Link
 } from "react-router-dom";
-import Highlights from './components/Highlights';
-import WatchScreen from './components/WatchScreen';
-import { useSelector } from 'react-redux';
+import "./App.css";
+import Header from "./components/Header";
+import Highlights from "./components/Highlights";
+import HomePage from "./components/HomePage";
+import MyTeams from "./components/MyTeams";
+import WatchScreen from "./components/WatchScreen";
 
+import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
 
-const RenderLayout = ({children}) => {
-  return(
-    <div className='homePage'>
+const RenderLayout = ({ children }) => {
+  return (
+    <div className="homePage">
       <Header />
       {children}
     </div>
-  )
-  
-
-}
-
+  );
+};
 
 function App() {
-  const selector = useSelector((state) => state.watchScreenState)
+  const selector = useSelector((state) => state.watchScreenState);
   return (
-    <Router>
-
+    <MantineProvider>
+      <Router>
         <Routes>
-          
-          <Route 
-            exact path='/' 
+          <Route
+            exact
+            path="/"
             element={
               <RenderLayout>
                 <HomePage />
               </RenderLayout>
-            } 
+            }
           />
 
-          <Route 
-            exact path='/highlights' 
+          <Route
+            exact
+            path="/highlights"
             element={
               <RenderLayout>
                 <Highlights />
               </RenderLayout>
-            } 
+            }
           />
 
           <Route
-            exact path='/watch'
+            exact
+            path="/teams"
+            element={
+              <RenderLayout>
+                <MyTeams />
+              </RenderLayout>
+            }
+          />
+
+          <Route
+            exact
+            path="/watch"
             element={
               <RenderLayout>
                 <WatchScreen />
               </RenderLayout>
             }
-
           />
 
-
-          <Route 
-            path="*" 
-            element={ 
-              <Navigate to="/" /> 
-            } 
-          />
-
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-    
-    </Router>
+      </Router>
+    </MantineProvider>
+  );
 
-  )
-
-
-
-      
-      
-      {/* {header} */}
-      {/* {sidebar} */}
-      {/* {Recvids} */}
+  {
+    /* {header} */
+  }
+  {
+    /* {sidebar} */
+  }
+  {
+    /* {Recvids} */
+  }
 }
 
 export default App;
