@@ -42,18 +42,18 @@ function App() {
     })
   }
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      setUser(user)
-      // ...
-    } else {
-      // User is signed out
-      // ...
-      setUser(null)
-    }
-  });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    // Cleanup listener on component unmount
+    return () => unsubscribe();
+  }, [auth]);
   
   return (
     <Router>
@@ -117,8 +117,6 @@ function App() {
                 }
 
               />
-
-
 
 
               <Route 
