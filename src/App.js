@@ -6,14 +6,10 @@ import {
   Routes,
   Route,
   Navigate,
-  Link,
-  useNavigate
 } from "react-router-dom";
 import Highlights from './components/Highlights';
 import WatchScreen from './components/WatchScreen';
 import LoginPage from './components/Login-page/LoginPage';
-import SignUpPage from './components/Login-page/SignUp';
-import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
@@ -21,7 +17,6 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 
 function App() {
-  const selector = useSelector((state) => state.watchScreenState)
   const auth = getAuth()
   const [user, setUser] = useState(auth.currentUser);
 
@@ -130,21 +125,7 @@ function App() {
 
   )
 
-
-
-      
-      
-      {/* {header} */}
-      {/* {sidebar} */}
-      {/* {Recvids} */}
 }
 
 export default App;
 
-// element={
-//   <div className='homePage'>
-//     <Header />
-//     <HomePage />
-//   </div>
-
-// }

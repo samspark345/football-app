@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Paper, Typography, TextField, Button, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
-import {Link, useNavigate} from 'react-router-dom'; // Updated import
-import {signInWithEmailAndPassword, signInWithPopup, getAuth, signInWithRedirect, getRedirectResult,
-    createUserWithEmailAndPassword
+import React, { useState } from 'react';
+import { Container, Typography, TextField, Button } from '@mui/material';
+import { useNavigate} from 'react-router-dom'; // Updated import
+import {signInWithEmailAndPassword, signInWithPopup, getAuth, createUserWithEmailAndPassword
 } from 'firebase/auth';
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import {googleProvider} from "../Firebase/firebase";
@@ -23,16 +21,8 @@ const LoginPage = () => {
     const handleLogin = async () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log(auth.currentUser)
             setError('')
 
-            // Set user data in session variables
-            sessionStorage.setItem('user', JSON.stringify(user));
-
-            // Set role in session variable 
-
-            // Navigate to a dashboard page (replace with your desired route)
             console.log('logged in')
         } catch (err) {
             const errorMessage = err.message || 'An error occurred';
@@ -44,11 +34,9 @@ const LoginPage = () => {
         googleProvider.setCustomParameters({ prompt: 'select_account' });
         try {
             
-          const result = await signInWithPopup(auth, googleProvider);
-          sessionStorage.setItem('user', JSON.stringify(user));
-          // Get the signed-in user
-          const user = result.user;
-          console.log("User signed in:", user);
+          await signInWithPopup(auth, googleProvider);
+          setError('')
+          console.log("User signed in");
         } catch (error) {
           console.error("Error during sign-in:", error.message);
         }

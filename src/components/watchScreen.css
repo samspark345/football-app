@@ -13,15 +13,11 @@
     width: 100%;
 }
 
-.watchScreenBorder{
-    
-}
 
 .watchScreenContainer div{
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    background-color: red;
     /* height: 800px !important; */
     object-fit: contain;
     padding-bottom: 800px !important;

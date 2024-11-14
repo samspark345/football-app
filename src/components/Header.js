@@ -1,6 +1,6 @@
 import React from 'react'
 import './header.css';
-import {Link, NavLink} from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import { Button } from '@mui/material';
 
 const Header = ({signOutFunction}) => {
