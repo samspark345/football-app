@@ -70,14 +70,7 @@ function App() {
 
               />
 
-              <Route
-                  exact path='/signup'
-                  element={
-                    <SignUpPage />
-                  }
-
-              />
-
+  
               <Route 
                 path="*" 
                 element={ 

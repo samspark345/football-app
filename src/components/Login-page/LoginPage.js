@@ -74,81 +74,100 @@ const LoginPage = () => {
       setError(err.message || 'An error occurred');
     }
   };
+
+  const textStyle = {
+    input: { color: "white" },          // Sets input text color to white
+    "& .MuiInputLabel-root": { color: "white" }, // Sets label color to white
+  }
      
 
 
     return (
-        <Container maxWidth="sm" sx={{ marginTop: '100px' }}>
-                <Typography variant='h2' style={{fontWeight: 700, }}>Welcome Back! </Typography>
-                <div className="user_login_options_div">
-                    <Typography variant="h5" className="user_login_options" gutterBottom
-                    style={{textDecoration: isSignup? "none": "underline"}} onClick={() => {setIsSignUp(false)}}>
-                        Login
+        <div className="login-page" >
+            <Container className="login-page" maxWidth="sm" >
+                    <div className='login-logo-div'>
+                        <img src={require('../../images/logo.png')}  alt='' className='login-logo'></img>
+                    </div>
+                    <Typography variant='h2' style={{fontWeight: 700, alignSelf:"center" }}>
+                        {isSignup? "Create an Account!" : "Welcome Back!" }
                     </Typography>
+                    <div className="user_login_options_div">
+                        <Typography variant="h5" className="user_login_options" gutterBottom
+                        style={{textDecoration: isSignup? "none": "underline"}} onClick={() => {setIsSignUp(false)}}>
+                            Login
+                        </Typography>
 
-                    <Typography variant="h5" className="user_login_options" gutterBottom 
-                    style={{textDecoration: isSignup? "underline": "none"}} onClick={() => {setIsSignUp(true)}}>
-                        Sign Up
-                    </Typography>
-                </div>
-                <TextField
-                    label="Email"
-                    type="email"
-                    required
-                    fullWidth
-                    margin="normal"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                        <Typography variant="h5" className="user_login_options" gutterBottom 
+                        style={{textDecoration: isSignup? "underline": "none"}} onClick={() => {setIsSignUp(true)}}>
+                            Sign Up
+                        </Typography>
+                    </div>
+                    <TextField
+                        label="Email"
+                        type="email"
+                        required
+                        fullWidth
+                        margin="normal"
+                        variant='filled'
+                        value={email}
+                        sx={textStyle}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
-                <TextField
-                    label="Password"
-                    type="password"
-                    required
-                    fullWidth
-                    margin="normal"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                    <TextField
+                        label="Password"
+                        type="password"
+                        required
+                        fullWidth
+                        margin="normal"
+                        variant='filled'
+                        value={password}
+                        sx={textStyle}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
 
-                {isSignup &&<TextField
-                    label="First name"
-                    type="text"
-                    fullWidth
-                    margin="normal"
-                    value={firstName}
-                    required
-                    onChange={(e) => setFirstName(e.target.value)}
-                />}
+                    {isSignup &&<TextField
+                        label="First name"
+                        type="text"
+                        fullWidth
+                        margin="normal"
+                        variant='filled'
+                        value={firstName}
+                        sx={textStyle}
+                        required
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />}
 
-                {isSignup && <TextField
-                    label="Last name"
-                    type="text"
-                    fullWidth
-                    margin="normal"
-                    value={lastName}
-                    required
-                    onChange={(e) => setLastName(e.target.value)}
-                />}
-                
-                {error && (
-                    <Typography variant="body2" color="error" sx={{ marginTop: '10px' }}>
-                        {error}
-                    </Typography>
-                )}
-                <div style={{display: "flex", flexDirection:"row", gap:"5px"}}>
+                    {isSignup && <TextField
+                        label="Last name"
+                        type="text"
+                        fullWidth
+                        margin="normal"
+                        variant='filled'
+                        value={lastName}
+                        sx={textStyle}
+                        required
+                        onChange={(e) => setLastName(e.target.value)}
+                    />}
+                    
+                    {error && (
+                        <Typography variant="body2" color="error" sx={{ marginTop: '10px' }}>
+                            {error}
+                        </Typography>
+                    )}
 
-                    <Button variant="contained" color="primary" onClick={isSignup? handleSignUp : handleLogin} 
+                    <Button variant="contained" fullWidth color="primary" onClick={isSignup? handleSignUp : handleLogin} 
                     sx={{ marginTop: '20px' }}>
                         {isSignup? "SignUp" : "Login"}
                     </Button>
-                    
-                </div>
-                <Typography variant="body2" sx={{ marginTop: '10px' }}>
-                        or
-                </Typography>
-                <button onClick={handleGoogleSignIn}>Sign In with Google</button>
-        </Container>
+                    <Typography variant="body2" sx={{ marginTop: '10px',  marginBottom: '10px', alignSelf:"center" }}>
+                            OR
+                    </Typography>
+                    <button type="button" className="login-with-google-btn" onClick={handleGoogleSignIn}>
+                        Sign in with Google
+                    </button>
+            </Container>
+        </div>
     );
 };
 
