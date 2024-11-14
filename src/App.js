@@ -6,67 +6,118 @@ import {
   Routes,
   Route,
   Navigate,
-  Link
 } from "react-router-dom";
 import Highlights from './components/Highlights';
 import WatchScreen from './components/WatchScreen';
-import { useSelector } from 'react-redux';
+import LoginPage from './components/Login-page/LoginPage';
+import { useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 
-const RenderLayout = ({children}) => {
-  return(
-    <div className='homePage'>
-      <Header />
-      {children}
-    </div>
-  )
-  
-
-}
 
 
 function App() {
-  const selector = useSelector((state) => state.watchScreenState)
+  const auth = getAuth()
+  const [user, setUser] = useState(auth.currentUser);
+
+
+  const RenderLayout = ({children}) => {
+    return(
+      <div className='homePage'>
+        <Header signOutFunction={signOutUser}/>
+        {children}
+      </div>
+    )
+    
+  }
+
+  const signOutUser = () => {
+    signOut(auth).then(() => {
+      setUser(null)
+    })
+  }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    // Cleanup listener on component unmount
+    return () => unsubscribe();
+  }, [auth]);
+  
   return (
     <Router>
-
         <Routes>
-          
-          <Route 
-            exact path='/' 
-            element={
-              <RenderLayout>
-                <HomePage />
-              </RenderLayout>
-            } 
-          />
 
-          <Route 
-            exact path='/highlights' 
-            element={
-              <RenderLayout>
-                <Highlights />
-              </RenderLayout>
-            } 
-          />
+          {!user? (
+            <>
 
-          <Route
-            exact path='/watch'
-            element={
-              <RenderLayout>
-                <WatchScreen />
-              </RenderLayout>
-            }
+              <Route
+                exact path='/login'
+                element={
+                  <LoginPage />
+                }
 
-          />
+              />
+
+  
+              <Route 
+                path="*" 
+                element={ 
+                  <Navigate to="/login" /> 
+                } 
+
+              />
+
+            </>
+          ) :
+          ( 
+          <>
+              <Route 
+                exact path='/' 
+                element={
+                  <RenderLayout>
+                    <HomePage />
+                  </RenderLayout>
+                } 
+              />
+
+              <Route 
+                exact path='/highlights' 
+                element={
+                  <RenderLayout>
+                    <Highlights />
+                  </RenderLayout>
+                } 
+              />
+
+              <Route
+                exact path='/watch'
+                element={
+                  <RenderLayout>
+                    <WatchScreen />
+                  </RenderLayout>
+                }
+
+              />
 
 
-          <Route 
-            path="*" 
-            element={ 
-              <Navigate to="/" /> 
-            } 
-          />
+              <Route 
+                path="*" 
+                element={ 
+                  <Navigate to="/" /> 
+                } 
+
+              />
+
+          </> )
+
+          }
 
         </Routes>
     
@@ -74,21 +125,7 @@ function App() {
 
   )
 
-
-
-      
-      
-      {/* {header} */}
-      {/* {sidebar} */}
-      {/* {Recvids} */}
 }
 
 export default App;
 
-// element={
-//   <div className='homePage'>
-//     <Header />
-//     <HomePage />
-//   </div>
-
-// }
