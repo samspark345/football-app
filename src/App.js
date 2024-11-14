@@ -11,7 +11,7 @@ import {
 import Highlights from './components/Highlights';
 import WatchScreen from './components/WatchScreen';
 import { useSelector } from 'react-redux';
-
+import ApiService from './api/api';
 
 const RenderLayout = ({children}) => {
   return(
@@ -27,6 +27,8 @@ const RenderLayout = ({children}) => {
 
 function App() {
   const selector = useSelector((state) => state.watchScreenState)
+  let apiService = new ApiService();
+  apiService.loadJSON();
   return (
     <Router>
 
@@ -73,8 +75,6 @@ function App() {
     </Router>
 
   )
-
-
 
       
       
