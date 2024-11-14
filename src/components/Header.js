@@ -13,7 +13,7 @@ const Header = () => {
         ></img>
       </div>
       <div className="navbarItems">
-        <NavLink end to="/teams">
+        <NavLink end to="/myteams">
           {" "}
           My Teams{" "}
         </NavLink>

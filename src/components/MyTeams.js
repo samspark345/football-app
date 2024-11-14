@@ -1,61 +1,52 @@
 import {
   Button,
   Center,
+  Container,
   Flex,
   Group,
   Image,
+  Input,
   SimpleGrid,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
 
-import placeHolder from "../images/placeholder.jpg";
-import TeamStat from "./TeamStat";
+import TeamCard from "./TeamCard";
 
 const MyTeams = () => {
   return (
-    <Flex direction="column">
-      <Center mt="100px">
-        <Title order={1} fz="60px">
-          Real Madrid
-        </Title>
-      </Center>
+    <>
+      <Flex direction="column">
+        <Center mt="100px">
+          <Stack align="center">
+            <Title order={1} fz="60px">
+              My Teams
+            </Title>
+            <Title order={2} fz="35px" fw="300" c="grey">
+              Start tpying your team name...
+            </Title>
+            <Flex direction="row">
+              <Input placeholder="Real Madrid" mr="20px"></Input>
+              <Button color="black">Add</Button>
+            </Flex>
+          </Stack>
+        </Center>
+      </Flex>
 
-      <Center mt="60px">
-        <Button color="gray" mx="8px">
-          View My Teams
-        </Button>
-        <Button color="black" mx="8px">
-          Add Teams
-        </Button>
-      </Center>
-
-      <Stack px="50px">
-        <Group display="block">
-          <Title order={1}>News</Title>
-          <Text>Last updated: 2024/01/01</Text>
-          <Flex direction="row" justify="center" gap="70px" mt="100px">
-            <Image src={placeHolder} w="500px" h="350px"></Image>
-            <Image src={placeHolder} w="500px" h="350px"></Image>
-          </Flex>
-        </Group>
-
-        <Group display="block" mt="100px">
-          <Title order={3}>Statistics</Title>
-          <Text>Last updated: 2024/01/01</Text>
-        </Group>
-
-        <SimpleGrid cols={3} verticalSpacing="55px" my="30px">
-          <TeamStat />
-          <TeamStat />
-          <TeamStat />
-          <TeamStat />
-          <TeamStat />
-          <TeamStat />
-        </SimpleGrid>
-      </Stack>
-    </Flex>
+      <Flex
+        direction="column"
+        bg="#f2f2f2"
+        my="100px"
+        py="30px"
+        align="center"
+        mx="150px"
+      >
+        <TeamCard teamId={"1"} />
+        <TeamCard teamId={"2"} />
+        <TeamCard teamId={"3"} />
+      </Flex>
+    </>
   );
 };
 

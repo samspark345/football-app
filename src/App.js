@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Highlights from "./components/Highlights";
 import HomePage from "./components/HomePage";
 import MyTeams from "./components/MyTeams";
+import TeamPage from "./components/TeamPage";
 import WatchScreen from "./components/WatchScreen";
 
 import { MantineProvider } from "@mantine/core";
@@ -53,10 +54,20 @@ function App() {
 
           <Route
             exact
-            path="/teams"
+            path="/myteams"
             element={
               <RenderLayout>
                 <MyTeams />
+              </RenderLayout>
+            }
+          />
+
+          <Route
+            exact
+            path="/myteams/team/:id"
+            element={
+              <RenderLayout>
+                <TeamPage />
               </RenderLayout>
             }
           />
