@@ -1,8 +1,9 @@
+import { Button } from "@mui/material";
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./header.css";
 
-const Header = () => {
+const Header = ({ signOutFunction }) => {
   return (
     <div className="nav">
       <div className="logo">
@@ -25,6 +26,13 @@ const Header = () => {
           {" "}
           Highlights{" "}
         </NavLink>
+        <Button
+          style={{ backgroundColor: "orange", color: "white" }}
+          onClick={signOutFunction}
+        >
+          {" "}
+          Sign Out
+        </Button>
       </div>
     </div>
   );
