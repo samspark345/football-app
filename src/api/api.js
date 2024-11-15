@@ -1,5 +1,4 @@
 import axios from 'axios';
-import './sample.json'
 
 class ApiService {
   api_url = 'https://api-football-v1.p.rapidapi.com/v3';
@@ -8,7 +7,7 @@ class ApiService {
     const response = await axios.get('/api/users');
     return response.data;
   }
-  
+
   async createUser(data) {
     const response = await axios.post('/api/users', data);
     return response.data;
