@@ -40,5 +40,6 @@
 .homePage{
   display: flex;
   flex-direction: column;
+  position: sticky;
   overflow: hidden;
 }
