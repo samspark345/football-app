@@ -1,23 +1,14 @@
 import axios from 'axios';
+import './sample.json'
 
 class ApiService {
-  static api_url = 'https://api-football-v1.p.rapidapi.com/v3';
+  api_url = 'https://api-football-v1.p.rapidapi.com/v3';
 
   async fetchUsers() {
     const response = await axios.get('/api/users');
     return response.data;
   }
-  async loadJSON() {
-    try {
-      const response = await fetch('sample.json');
-      console.log("O")
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
+  
   async createUser(data) {
     const response = await axios.post('/api/users', data);
     return response.data;
@@ -27,25 +18,15 @@ class ApiService {
     const options =  {
       method: 'GET',
       url: this.api_url + endpoint,
-      params: parameters,
+      params: parameters? parameters : '',
       headers: {
-        'x-rapidapi-key': process.env.API_KEY,
+        'x-rapidapi-key': process.env.REACT_APP_API_KEY,
         'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
       }
     };
     return options
   }
-  createOptions(endpoint)  {
-    const options =  {
-      method: 'GET',
-      url: this.api_url + endpoint,
-      headers: {
-        'x-rapidapi-key': process.env.API_KEY,
-        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
-      }
-    };
-    return options
-  }
+  
   checkForError(response) {
     if (!response.ok) {
       throw new Error(response.statusText);
@@ -73,17 +54,18 @@ class ApiService {
   }
 
   async retrieveAllCountries() {
-    const options =  this.createOptions('/countries')
+    const options =  this.createOptions(null, '/countries')
+    console.log(options)
     return await this.callFootballApi(options)
   }
 
   async retrieveAllLeagues() {
-    const options =  this.createOptions('/leagues')
+    const options =  this.createOptions(null, '/leagues')
     return this.callFootballApi(options)
   }
 
   async retrieveAllSeasons() {
-    const options =  this.createOptions('/seasons')
+    const options =  this.createOptions(null, '/seasons')
     this.callFootballApi(options)
   }
 

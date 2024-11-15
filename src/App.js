@@ -27,8 +27,8 @@ const RenderLayout = ({children}) => {
 
 function App() {
   const selector = useSelector((state) => state.watchScreenState)
-  let apiService = new ApiService();
-  apiService.loadJSON();
+  const apiService = new ApiService();
+  
   return (
     <Router>
 
