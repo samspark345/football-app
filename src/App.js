@@ -1,41 +1,43 @@
-import './App.css';
-import Header from './components/Header';
-import HomePage from './components/HomePage';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
+  Link,
+  Navigate,
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate,
 } from "react-router-dom";
-import Highlights from './components/Highlights';
-import WatchScreen from './components/WatchScreen';
-import LoginPage from './components/Login-page/LoginPage';
-import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import "./App.css";
+import Header from "./components/Header";
+import Highlights from "./components/Highlights";
+import HomePage from "./components/HomePage";
+import LoginPage from "./components/Login-page/LoginPage";
+import MyTeams from "./components/MyTeams";
+import TeamPage from "./components/TeamPage";
+import WatchScreen from "./components/WatchScreen";
 
-
-
+import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
 
 function App() {
-  const auth = getAuth()
+  const auth = getAuth();
   const [user, setUser] = useState(auth.currentUser);
 
-
-  const RenderLayout = ({children}) => {
-    return(
-      <div className='homePage'>
-        <Header signOutFunction={signOutUser}/>
+  const RenderLayout = ({ children }) => {
+    return (
+      <div className="homePage">
+        <Header signOutFunction={signOutUser} />
         {children}
       </div>
-    )
-    
-  }
+    );
+  };
 
   const signOutUser = () => {
     signOut(auth).then(() => {
-      setUser(null)
-    })
-  }
+      setUser(null);
+    });
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -49,83 +51,78 @@ function App() {
     // Cleanup listener on component unmount
     return () => unsubscribe();
   }, [auth]);
-  
+
   return (
-    <Router>
+    <MantineProvider>
+      <Router>
         <Routes>
-
-          {!user? (
+          {!user ? (
             <>
+              <Route exact path="/login" element={<LoginPage />} />
 
-              <Route
-                exact path='/login'
-                element={
-                  <LoginPage />
-                }
-
-              />
-
-  
-              <Route 
-                path="*" 
-                element={ 
-                  <Navigate to="/login" /> 
-                } 
-
-              />
-
+              <Route path="*" element={<Navigate to="/login" />} />
             </>
-          ) :
-          ( 
-          <>
-              <Route 
-                exact path='/' 
+          ) : (
+            <>
+              <Route
+                exact
+                path="/"
                 element={
                   <RenderLayout>
                     <HomePage />
                   </RenderLayout>
-                } 
+                }
               />
 
-              <Route 
-                exact path='/highlights' 
+              <Route
+                exact
+                path="/highlights"
                 element={
                   <RenderLayout>
                     <Highlights />
                   </RenderLayout>
-                } 
+                }
               />
 
               <Route
-                exact path='/watch'
+                exact
+                path="/watch"
                 element={
                   <RenderLayout>
                     <WatchScreen />
                   </RenderLayout>
                 }
-
               />
 
-
-              <Route 
-                path="*" 
-                element={ 
-                  <Navigate to="/" /> 
-                } 
-
+              <Route
+                exact
+                path="/myteams"
+                element={
+                  <RenderLayout>
+                    <MyTeams />
+                  </RenderLayout>
+                }
               />
 
-          </> )
+              <Route
+                exact
+                path="/myteams/team/:id"
+                element={
+                  <RenderLayout>
+                    <TeamPage />
+                  </RenderLayout>
+                }
+              />
 
-          }
+              <Route path="*" element={<Navigate to="/" />} />
+            </>
+          )}
 
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-    
-    </Router>
-
-  )
-
+      </Router>
+    </MantineProvider>
+  );
 }
 
 export default App;
-
