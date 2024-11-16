@@ -1,14 +1,17 @@
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
-  Link,
   Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
+
+
+import { useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+
+
 import "./App.css";
+import ApiService from './api/api';
 import Header from "./components/Header";
 import Highlights from "./components/Highlights";
 import HomePage from "./components/HomePage";
@@ -21,7 +24,9 @@ import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 
 function App() {
-  const auth = getAuth();
+
+  const apiService = new ApiService();
+  const auth = getAuth()
   const [user, setUser] = useState(auth.currentUser);
 
   const RenderLayout = ({ children }) => {
