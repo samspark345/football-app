@@ -7,21 +7,17 @@
     align-items: center;
     padding-top: 130px;
     color: white;
-    background-color: #282c34;
+    background-color: #6C727D;
     min-height: 88.5vh;
     height: 100vh;
     width: 100%;
 }
 
-.watchScreenBorder{
-    
-}
 
 .watchScreenContainer div{
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    background-color: red;
     /* height: 800px !important; */
     object-fit: contain;
     padding-bottom: 800px !important;
