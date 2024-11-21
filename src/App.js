@@ -5,13 +5,11 @@ import {
   Routes,
 } from "react-router-dom";
 
-
-import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 import "./App.css";
-import ApiService from './api/api';
+import ApiService from "./api/api";
 import Header from "./components/Header";
 import Highlights from "./components/Highlights";
 import HomePage from "./components/HomePage";
@@ -25,9 +23,7 @@ import "@mantine/core/styles.css";
 import TeamSelect from "./components/TeamSelect";
 
 function App() {
-
-  const apiService = new ApiService();
-  const auth = getAuth()
+  const auth = getAuth();
   const [user, setUser] = useState(auth.currentUser);
 
   const RenderLayout = ({ children }) => {
@@ -122,7 +118,7 @@ function App() {
 
               <Route
                 exact
-                path="/myteams/team/:id"
+                path="/myteams/team/:teamId"
                 element={
                   <RenderLayout>
                     <TeamPage />
