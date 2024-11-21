@@ -22,6 +22,7 @@ import WatchScreen from "./components/WatchScreen";
 
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import TeamSelect from "./components/TeamSelect";
 
 function App() {
 
@@ -105,6 +106,16 @@ function App() {
                 element={
                   <RenderLayout>
                     <MyTeams />
+                  </RenderLayout>
+                }
+              />
+
+              <Route
+                exact
+                path="/teamSelect"
+                element={
+                  <RenderLayout>
+                    <TeamSelect />
                   </RenderLayout>
                 }
               />
