@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 
 class ApiService {
   api_url = 'https://api-football-v1.p.rapidapi.com/v3';
@@ -65,7 +67,7 @@ class ApiService {
 
   async retrieveAllSeasons() {
     const options =  this.createOptions(null, '/seasons')
-    this.callFootballApi(options)
+    return this.callFootballApi(options)
   }
 
 
@@ -74,7 +76,24 @@ class ApiService {
       id: country
     }
     const options =  this.createOptions(parameters, '/teams')
-    this.callFootballApi(options)
+    return this.callFootballApi(options)
+  }
+
+  async retrieveTeamInfo(league, season) {
+    let parameters = {
+      league: league,
+      season: season
+    }
+    const options =  this.createOptions(parameters, '/teams')
+    return this.callFootballApi(options)
+  }
+
+  async retrieveLeaguesByCountryName(country_name) {
+    let parameters = {
+      country: country_name
+    }
+    const options =  this.createOptions(parameters, '/leagues')
+    return this.callFootballApi(options)
   }
 
   async retrieveLeaguesByTeamId(team_id) {
@@ -82,7 +101,7 @@ class ApiService {
       team: team_id
     }
     const options =  this.createOptions(parameters, '/leagues')
-    this.callFootballApi(options)
+    return this.callFootballApi(options)
   }
 
   async retrieveTeamStatsByLeague(league_id, team_id, season) {
@@ -92,9 +111,129 @@ class ApiService {
       team: team_id
     }
     const options =  this.createOptions(parameters, '/teams/statistics')
-    this.callFootballApi(options)
+    return this.callFootballApi(options)
   }
 
+  async populateCountriesInDatabase(){
+    const countries = await this.retrieveAllCountries()
+    const db = getFirestore()
+    console.log(countries)
+    const countriesRef = doc(db, 'groups', "countries")
+    setDoc(countriesRef, countries)
+  }
+
+  async getTeamsInDatabase(){
+    const db = getFirestore();
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    const savedTeamsRef = doc(db, "saved_teams", user.uid);
+
+    try {
+      // Retrieve the current document data
+      const docSnapshot = await getDoc(savedTeamsRef);
+      
+      if (docSnapshot.exists()) {
+        // Get the existing data
+        const currentData = docSnapshot.data();
+        console.log(currentData.team_Info)
+
+        return currentData.team_Info
+
+      } else {
+        // If no document exists, create a new one with the team_Info list
+        return []
+      }
+    } catch (error) {
+      console.error("Error retrieving teams:", error);
+    }
+  }
+
+  async addTeamInDatabase(team_Info){
+    const db = getFirestore();
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("User not authenticated");
+      return "Error user not authenticated";
+    }
+
+    const savedTeamsRef = doc(db, "saved_teams", user.uid);
+
+    try {
+      // Retrieve the current document data
+      const docSnapshot = await getDoc(savedTeamsRef);
+      
+      if (docSnapshot.exists()) {
+        // Get the existing data
+        const currentData = docSnapshot.data();
+        const currentTeams = currentData.team_Info || []; // Default to an empty array
+
+        // Check if the team already exists in the list
+        if (!currentTeams.some(team => team.id === team_Info.id)) {
+          // Add the new team to the list
+          currentTeams.push(team_Info);
+        } else {
+          console.log("Team already exists in the saved list.");
+        }
+
+        // Update the document
+        await setDoc(savedTeamsRef, { team_Info: currentTeams });
+      } else {
+        // If no document exists, create a new one with the team_Info list
+        await setDoc(savedTeamsRef, { team_Info: [team_Info] });
+      }
+
+      return("Team successfully added.");
+    } catch (error) {
+      console.error("Error adding team:", error);
+      return ("Error adding team")
+    }
+  }
+
+  async deleteTeamFromDatabase(teamId) {
+    const db = getFirestore();
+    const auth = getAuth();
+    const user = auth.currentUser;
+  
+    if (!user) {
+      console.error("User not authenticated");
+      return "Error: User not authenticated";
+    }
+  
+    const savedTeamsRef = doc(db, "saved_teams", user.uid);
+  
+    try {
+      // Retrieve the current document data
+      const docSnapshot = await getDoc(savedTeamsRef);
+  
+      if (docSnapshot.exists()) {
+        // Get the existing data
+        const currentData = docSnapshot.data();
+        const currentTeams = currentData.team_Info || []; // Default to an empty array
+  
+        // Filter out the team to be deleted
+        const updatedTeams = currentTeams.filter((team) => team.id !== teamId);
+  
+        // Update the document with the updated team list
+        await setDoc(savedTeamsRef, { team_Info: updatedTeams });
+  
+        return "Team successfully deleted.";
+      } else {
+        console.log("No saved teams found for the user.");
+        return "No teams to delete.";
+      }
+    } catch (error) {
+      console.error("Error deleting team:", error);
+      return "Error deleting team.";
+    }
+  }
 }
 
 export default ApiService;
