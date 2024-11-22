@@ -45,14 +45,19 @@ const TeamSelect = () => {
 
   // Fetches the leagues for the selected country
   const getLeagues = async () => {
-    const response = await apiService.retrieveLeaguesByCountryName(selectedCountry);
+    const response = await apiService.retrieveLeaguesByCountryName(
+      selectedCountry
+    );
     console.log("Leagues response:", response);
     setLeagues(Array.isArray(response.response) ? response.response : []);
   };
 
   // Fetches the teams for the selected league
   const getTeams = async () => {
-    const response = await apiService.retrieveTeamInfo(selectedLeagueId, "2024");
+    const response = await apiService.retrieveTeamInfo(
+      selectedLeagueId,
+      "2024"
+    );
     console.log("Teams response:", response);
     setTeams(Array.isArray(response.response) ? response.response : []);
   };
@@ -160,10 +165,11 @@ const TeamSelect = () => {
         <Button
           mt="20px"
           color="black"
-          onClick={() =>
-            viewState === "teams"
-              ? setViewState("leagues") // Move back to "leagues" view
-              : setViewState("countries") // Move back to "countries" view
+          onClick={
+            () =>
+              viewState === "teams"
+                ? setViewState("leagues") // Move back to "leagues" view
+                : setViewState("countries") // Move back to "countries" view
           }
         >
           Back
