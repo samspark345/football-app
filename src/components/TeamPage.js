@@ -206,12 +206,23 @@ const TeamPage = () => {
         setError(null);
 
         const apiService = new ApiService();
-        const rosterResponse = await apiService.retrieveTeamRoster(
-          teamId,
-          selectedSeason
-        );
+        let allPlayers = [];
+        let page = 1;
 
-        if (rosterResponse.response && rosterResponse.response.length > 0) {
+        while (true) {
+          const rosterResponse = await apiService.retrieveTeamRoster(
+            teamId,
+            selectedSeason,
+            page
+          );
+
+          if (
+            !rosterResponse.response ||
+            rosterResponse.response.length === 0
+          ) {
+            break;
+          }
+
           const players = rosterResponse.response.map((playerData) => ({
             name: playerData.player.name,
             position: playerData.statistics[0].games.position,
@@ -219,8 +230,17 @@ const TeamPage = () => {
             nationality: playerData.player.nationality,
             photo: playerData.player.photo,
           }));
-          setTeamRoster(players);
+
+          allPlayers = [...allPlayers, ...players];
+
+          if (rosterResponse.paging.current === rosterResponse.paging.total) {
+            break;
+          }
+
+          page++;
         }
+
+        setTeamRoster(allPlayers);
       } catch (err) {
         console.error(err);
         setError("Failed to fetch team roster. Please try again later.");

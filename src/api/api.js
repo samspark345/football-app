@@ -61,23 +61,36 @@ class ApiService {
   }
 
   async retrieveTopScorer(teamId, season) {
-    const parameters = { team: teamId, season };
-    const options = this.createOptions(parameters, "/players");
-    const response = await this.callFootballApi(options);
+    let page = 1;
+    let topScorer = null;
 
-    if (response.response && response.response.length > 0) {
-      const players = response.response;
-      const topScorer = players.reduce((max, player) => {
+    while (true) {
+      const parameters = { team: teamId, season, page };
+      const options = this.createOptions(parameters, "/players");
+      const response = await this.callFootballApi(options);
+
+      if (!response.response || response.response.length === 0) {
+        break;
+      }
+
+      for (const player of response.response) {
         const goals = player.statistics[0]?.goals?.total || 0;
-        return goals > (max.goals || 0)
-          ? { name: player.player.name, goals, photo: player.player.photo }
-          : max;
-      }, {});
+        if (!topScorer || goals > (topScorer.goals || 0)) {
+          topScorer = {
+            name: player.player.name,
+            goals,
+            photo: player.player.photo,
+          };
+        }
+      }
+      if (response.paging.current === response.paging.total) {
+        break;
+      }
 
-      return topScorer;
+      page++;
     }
 
-    return null;
+    return topScorer;
   }
 
   async retrieveAllLeagues() {
@@ -85,10 +98,11 @@ class ApiService {
     return this.callFootballApi(options);
   }
 
-  async retrieveTeamRoster(team_id, season_year) {
+  async retrieveTeamRoster(team_id, season_year, page) {
     let parameters = {
       team: team_id,
       season: season_year,
+      page: page,
     };
     const option = this.createOptions(parameters, "/players");
     return await this.callFootballApi(option);
