@@ -28,9 +28,7 @@ const TeamPage = () => {
   const [leagueName, setLeagueName] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [mostYellowCards, setMostYellowCards] = useState(null);
-  const [mostRedCards, setMostRedCards] = useState(null);
-
+  const [teamRoster, setTeamRoster] = useState([]);
   useEffect(() => {
     if (!teamId) return;
 
@@ -199,6 +197,41 @@ const TeamPage = () => {
     fetchStatsAndLastMatchForLeague();
   }, [teamId, selectedSeason, selectedLeague, leagueOptions]);
 
+  useEffect(() => {
+    if (!teamId || !selectedSeason) return;
+
+    const fetchRoster = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const apiService = new ApiService();
+        const rosterResponse = await apiService.retrieveTeamRoster(
+          teamId,
+          selectedSeason
+        );
+
+        if (rosterResponse.response && rosterResponse.response.length > 0) {
+          const players = rosterResponse.response.map((playerData) => ({
+            name: playerData.player.name,
+            position: playerData.statistics[0].games.position,
+            age: playerData.player.age,
+            nationality: playerData.player.nationality,
+            photo: playerData.player.photo,
+          }));
+          setTeamRoster(players);
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch team roster. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoster();
+  }, [teamId, selectedSeason]);
+
   if (loading) {
     return (
       <Center mt="100px">
@@ -304,55 +337,6 @@ const TeamPage = () => {
         </Center>
       )}
 
-      {(mostYellowCards || mostRedCards) && (
-        <Stack spacing="sm" mt="20px">
-          {mostYellowCards && (
-            <Group>
-              <Image
-                src={mostYellowCards.photo}
-                alt={`${mostYellowCards.player}'s photo`}
-                width={40}
-                height={40}
-                radius="50%"
-                withPlaceholder
-              />
-              <Image
-                src="/path-to-yellow-card-icon.png"
-                alt="Yellow Card"
-                width={20}
-                height={20}
-              />
-              <Text>
-                Most Yellow Cards: <strong>{mostYellowCards.player}</strong> (
-                {mostYellowCards.count})
-              </Text>
-            </Group>
-          )}
-          {mostRedCards && (
-            <Group>
-              <Image
-                src={mostRedCards.photo}
-                alt={`${mostRedCards.player}'s photo`}
-                width={40}
-                height={40}
-                radius="50%"
-                withPlaceholder
-              />
-              <Image
-                src="/path-to-red-card-icon.png"
-                alt="Red Card"
-                width={20}
-                height={20}
-              />
-              <Text>
-                Most Red Cards: <strong>{mostRedCards.player}</strong> (
-                {mostRedCards.count})
-              </Text>
-            </Group>
-          )}
-        </Stack>
-      )}
-
       {/* Team Stats */}
       {selectedSeason && teamStats && (
         <Stack px="50px" mt="30px">
@@ -380,6 +364,36 @@ const TeamPage = () => {
               { label: "Draws", value: teamStats.fixtures.draws.total },
             ].map((stat, index) => (
               <TeamStat key={index} label={stat.label} value={stat.value} />
+            ))}
+          </SimpleGrid>
+        </Stack>
+      )}
+      {teamRoster.length > 0 && (
+        <Stack px="50px" mt="30px">
+          <Title order={2}>Team Roster</Title>
+          <SimpleGrid cols={3} verticalSpacing="40px" mt="20px">
+            {teamRoster.map((player, index) => (
+              <Group key={index} align="center">
+                <Image
+                  src={player.photo}
+                  alt={player.name}
+                  width={50}
+                  height={50}
+                  radius="xl"
+                />
+                <Stack spacing={0}>
+                  <Text weight={500}>{player.name}</Text>
+                  <Text size="sm" c="dimmed">
+                    Position: {player.position}
+                  </Text>
+                  <Text size="sm" c="dimmed">
+                    Age: {player.age}
+                  </Text>
+                  <Text size="sm" c="dimmed">
+                    Nationality: {player.nationality}
+                  </Text>
+                </Stack>
+              </Group>
             ))}
           </SimpleGrid>
         </Stack>

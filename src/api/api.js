@@ -85,6 +85,15 @@ class ApiService {
     return this.callFootballApi(options);
   }
 
+  async retrieveTeamRoster(team_id, season_year) {
+    let parameters = {
+      team: team_id,
+      season: season_year,
+    };
+    const option = this.createOptions(parameters, "/players");
+    return await this.callFootballApi(option);
+  }
+
   async retrieveAllSeasons() {
     const options = this.createOptions(null, "/seasons");
     return this.callFootballApi(options);
